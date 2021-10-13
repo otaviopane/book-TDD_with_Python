@@ -1,12 +1,3 @@
-'''Esse é o nosso primeiro FT (Functional Test, ou Teste Funcional);
-Por enquanto, é suficiente garantir que compreendemos o que esse teste faz:
-• inicia um “webdriver” Selenium para apresentar uma verdadeira janela do 
-navegador Firefox;
-• usa essa janela para abrir uma página web que esperamos que vá ser
-servida pelo microcomputador local;
-• verifica (fazendo uma asserção de teste) se a página tem a palavra
-“Django” no título.'''
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
@@ -52,7 +43,7 @@ class NewVisitorTest(unittest.TestCase):
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
             any(row.text == '1: Buy peacock feathers' for row in rows),
-            "New to-do item did not appear in table"
+            f"New to-do item did not appear in table. Contents were\n{table.text}"
         )
 
         # Ainda continua havendo uma caixa de texto convidando-a a acrescentar outro item.
