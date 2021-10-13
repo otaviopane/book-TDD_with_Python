@@ -1,31 +1,11 @@
-from django.urls import resolve
 from django.test import TestCase
-from django.http import HttpRequest
-
-from lists.views import home_page
 
 
 class HomePageTest(TestCase):
 
-    def test_root_url_resolves_to_home_page_view(self):
-        found = resolve('/')
-        self.assertEqual(found.func, home_page)
-
-    """resolve é a função que Django utiliza internamente para resolver URLs e
-    descobrir para qual função de view eles devem ser mapeados. Estamos
-    verificando se resolve, quando é chamado com “/”, que é a raiz do site,
-    encontra uma função chamada home_page."""
-    """ Que função é essa? É a função de view que escreveremos a seguir, a
-    qual, na verdade, devolverá o HTML que queremos. Com base no import,
-    podemos ver que estamos planejando armazená-la em lists/views.py."""
-
-    def test_home_page_return_correct_html(self):
-        request = HttpRequest()
-        response = home_page(request)
-        html = response.content.decode('utf8')
-        self.assertTrue(html.startswith('<html>'))
-        self.assertIn('<title>To-Do lists</title>', html)
-        self.assertTrue(html.endswith('</html>'))
+    def test_uses_home_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html')
 
     """Criamos um objeto HttpRequest, que é o que o Django verá quando o
     navegador de um usuário requisitar uma página."""
